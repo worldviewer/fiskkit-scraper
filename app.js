@@ -21,7 +21,18 @@ app.get('/', function(req, res) {
 });
 
 app.post('/url', function(req, res) {
-	console.log("Scrape page " + req.body.scrapepage);
+	var scrapePage = req.body.scrapepage;
+	var pageBody = '';
+
+	console.log("Scrape page " + scrapePage);
+
+	request(scrapePage, function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			pageBody = body;
+
+			console.log(pageBody);
+		}
+	})
 
 	res.render('scrape');
 });

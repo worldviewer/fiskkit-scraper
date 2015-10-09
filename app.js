@@ -7,8 +7,7 @@ var express = require('express'),
 
 var app = express();
 var $;
-var articleTitle, articleSubTitle, completeArticle;
-var articleParagraphs = [];
+var articleTitle, articleSubTitle, completeArticle, articleParagraphs;
 
 // Use EJS for templating
 app.set('view engine', 'ejs');
@@ -25,7 +24,7 @@ app.get('/', function(req, res) {
 	res.render('scrape', {page: null});
 });
 
-app.post('/url', function(req, res) {
+app.post('/', function(req, res) {
 	var scrapePage = req.body.scrapepage;
 	var pageBody = '';
 
@@ -44,6 +43,9 @@ app.post('/url', function(req, res) {
 
 			// Capture sub-title w/o html tags
 			articleSubTitle = $('.article-main-content div.dek').text();
+
+			articleParagraphs = [];
+			completeArticle = '';
 
 			// Push paragraphs into array, w/o html tags
 			$('.article-body-content').children('p')

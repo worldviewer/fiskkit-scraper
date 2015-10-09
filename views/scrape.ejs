@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>News Article Scraper</title>
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 	<form action="/url" method="post">
@@ -10,5 +11,12 @@
 		<input type="url" name="scrapepage" value="http://www.thedailybeast.com/articles/2014/08/21/swat-lobby-takes-a-shot-at-congress.html"><br><br>
 		<input type="submit" value="Submit">
 	</form>
+
+	<hr />
+
+	<pre>
+<%= page %>
+	</pre>
+
 </body>
 </html>

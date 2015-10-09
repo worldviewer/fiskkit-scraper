@@ -12,7 +12,7 @@ News articles are structured differently so your extractor may not work for all 
 
 ## Output
 
-The main boby of the article written to a text file 
+The main body of the article written to a text file 
 
 ## Constraints
 

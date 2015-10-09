@@ -1,9 +1,14 @@
 var express = require('express'),
 	ejs = require('ejs'),
 	bodyParser = require('body-parser'),
+	file = require('easy-file'),
+	cheerio = require('cheerio'),
 	request = require('request');
 
 var app = express();
+var $;
+var articleTitle, articleSubTitle, completeArticle;
+var articleParagraphs = [];
 
 // Use EJS for templating
 app.set('view engine', 'ejs');
@@ -17,7 +22,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.get('/', function(req, res) {
 	console.log("In app.get('/') route ...");
 
-	res.render('scrape');
+	res.render('scrape', {page: null});
 });
 
 app.post('/url', function(req, res) {
@@ -30,11 +35,33 @@ app.post('/url', function(req, res) {
 		if (!error && response.statusCode == 200) {
 			pageBody = body;
 
-			console.log(pageBody);
+			// Cheerio gives us a jQuery-like interface to searching the DOM
+			// on the server
+			$ = cheerio.load(pageBody);
+
+			// Capture title w/o html tags
+			articleTitle = $('.article-main-content h1.title').text();
+
+			// Capture sub-title w/o html tags
+			articleSubTitle = $('.article-main-content div.dek').text();
+
+			// Push paragraphs into array, w/o html tags
+			$('.article-body-content').children('p')
+				.each(function(i, elem) {
+					articleParagraphs.push($(this).text());
+				});
+
+			// Join article parts
+			completeArticle = articleTitle + '\n\n'
+				+ articleSubTitle + '\n\n'
+				+ articleParagraphs.join('\n\n');
+
+			// Log results to console, file and page
+			console.log(completeArticle);
+			file.write('article.txt', completeArticle);
+			res.render('scrape', {page: completeArticle});
 		}
 	})
-
-	res.render('scrape');
 });
 
 app.listen(process.env.PORT || 3000, function() {

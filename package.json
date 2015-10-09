@@ -1,0 +1,24 @@
+{
+  "name": "fiskkit-scraper",
+  "version": "1.0.0",
+  "description": "News article web scraper",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/worldviewer/fiskkit-scraper.git"
+  },
+  "author": "Chris Reeve",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/worldviewer/fiskkit-scraper/issues"
+  },
+  "homepage": "https://github.com/worldviewer/fiskkit-scraper",
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "request": "^2.64.0"
+  }
+}

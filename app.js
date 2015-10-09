@@ -37,11 +37,13 @@ app.post('/', function(req, res) {
 		if (!error && response.statusCode == 200) {
 			pageBody = body;
 
+			console.log('PAGE BODY: \n\n' + pageBody + '\n\n');
+
+			// CHEERIO SCRAPER
+
 			// Cheerio gives us a jQuery-like interface to searching the DOM
 			// on the server
 			$ = cheerio.load(pageBody);
-
-			console.log('PAGE BODY: \n\n' + pageBody + '\n\n');
 
 			// Capture title w/o html tags
 			articleTitle = $('.article-main-content h1.title').text();
@@ -64,11 +66,31 @@ app.post('/', function(req, res) {
 				+ articleParagraphs.join('\n\n');
 
 			// Log results to console, file and page
-			console.log(completeArticle);
+			// console.log(completeArticle);
 			file.write('article.txt', completeArticle);
 			res.render('scrape', {page: completeArticle});
+
 		}
-	})
+	});
+
+	// X-RAY SCRAPER
+
+	// X-Ray provides an ability to digest dynamic pages; I'm
+	// using it here to see if it can clarify why the Cheerio
+	// selectors appear to only grab the first article
+
+	console.log("\n\nX-RAY TEST 1:\n\n");
+
+	x(scrapePage, '.article-body-content', ['p'])(function(err, paragraphs) {
+		console.log(paragraphs);
+
+		console.log("\n\nX-RAY TEST 2:\n\n");
+
+		x(scrapePage, ['p'])(function(err, articles) {
+			console.log(articles);
+		});
+	});
+
 });
 
 app.listen(process.env.PORT || 3000, function() {

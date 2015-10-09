@@ -3,9 +3,12 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	file = require('easy-file'),
 	cheerio = require('cheerio'),
+	xray = require('x-ray'),
 	request = require('request');
 
 var app = express();
+var x = xray();
+
 var $;
 var articleTitle, articleSubTitle, completeArticle, articleParagraphs;
 
@@ -37,6 +40,8 @@ app.post('/', function(req, res) {
 			// Cheerio gives us a jQuery-like interface to searching the DOM
 			// on the server
 			$ = cheerio.load(pageBody);
+
+			console.log('PAGE BODY: \n\n' + pageBody + '\n\n');
 
 			// Capture title w/o html tags
 			articleTitle = $('.article-main-content h1.title').text();

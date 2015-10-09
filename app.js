@@ -7,7 +7,8 @@ var express = require('express'),
 
 var app = express();
 var $;
-var articleTitle, articleSubTitle, completeArticle;
+var articleTitle, articleSubTitle;
+var completeArticle = '';
 var articleParagraphs = [];
 
 // Use EJS for templating
@@ -25,7 +26,7 @@ app.get('/', function(req, res) {
 	res.render('scrape', {page: null});
 });
 
-app.post('/url', function(req, res) {
+app.post('/', function(req, res) {
 	var scrapePage = req.body.scrapepage;
 	var pageBody = '';
 

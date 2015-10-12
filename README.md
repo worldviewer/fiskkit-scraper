@@ -32,6 +32,6 @@ I then created a couple of very simple test cases with just pure jQuery to valid
 
 Looking a bit closer at the content that is returned from Node's Request module, I now see that although I can observe p tags for those other articles in Chrome's Dev Tools, my HTTP request does not return that content with p tags.  A p tag instead comes as escaped characters, like ...
 
-&lt;p&gt;
+\&lt;p\&gt;
 
 The browser doesn't blink at this, but jQuery and other similar tools seem to just completely miss it.
